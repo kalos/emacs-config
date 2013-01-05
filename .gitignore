@@ -1,0 +1,8 @@
+.org-id-locations
+.smex-items
+auto-save-list
+bookmarks
+backups/
+places
+*.old
+*.bak

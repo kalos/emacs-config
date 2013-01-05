@@ -1,0 +1,28 @@
+;;; .loaddefs.el --- automatically extracted autoloads
+;;
+;;; Code:
+
+
+;;;### (autoloads (color-theme-zenburn) "color-theme-zenburn/zenburn"
+;;;;;;  "color-theme-zenburn/zenburn.el" (20180 50107))
+;;; Generated autoloads from color-theme-zenburn/zenburn.el
+
+(autoload 'color-theme-zenburn "color-theme-zenburn/zenburn" "\
+Just some alien fruit salad to keep you in the zone.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil nil ("el-get/el-get-install.el" "el-get/el-get.el")
+;;;;;;  (20180 50108 462721))
+
+;;;***
+
+(provide '.loaddefs)
+;; Local Variables:
+;; version-control: never
+;; no-update-autoloads: t
+;; coding: utf-8
+;; End:
+;;; .loaddefs.el ends here
