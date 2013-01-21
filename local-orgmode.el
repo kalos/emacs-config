@@ -4,7 +4,7 @@
 (require 'org)
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\)$" . org-mode))
-(setq org-directory "~/progetti/org")
+(setq org-directory "~/projects/org")
 
 ;; Standard key bindings
 (global-set-key "\C-cl" 'org-store-link)
@@ -136,16 +136,18 @@ so change the default 'F' binding in the agenda to allow both"
 
 (defun bh/narrow-to-org-subtree ()
   (widen)
-  (org-narrow-to-subtree)
-  (save-restriction
-    (org-agenda-set-restriction-lock)))
+  (org-narrow-to-subtree))
 
 (defun bh/narrow-to-subtree ()
   (interactive)
   (if (equal major-mode 'org-agenda-mode)
       (org-with-point-at (org-get-at-bol 'org-hd-marker)
-        (bh/narrow-to-org-subtree))
-    (bh/narrow-to-org-subtree)))
+        (bh/narrow-to-org-subtree)
+        (save-restriction
+          (org-agenda-set-restriction-lock)))
+    (bh/narrow-to-org-subtree)
+    (save-restriction
+      (org-agenda-set-restriction-lock))))
 
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "N" 'bh/narrow-to-subtree))
@@ -167,8 +169,12 @@ so change the default 'F' binding in the agenda to allow both"
   (interactive)
   (if (equal major-mode 'org-agenda-mode)
       (org-with-point-at (bh/get-pom-from-agenda-restriction-or-point)
-        (bh/narrow-up-one-org-level))
-    (bh/narrow-up-one-org-level)))
+        (bh/narrow-to-org-project)
+        (save-restriction
+          (org-agenda-set-restriction-lock)))
+    (bh/narrow-to-org-project)
+    (save-restriction
+      (org-agenda-set-restriction-lock))))
 
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "U" 'bh/narrow-up-one-level))
@@ -449,7 +455,7 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
 
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" ))))
 
 (setq org-todo-keyword-faces
@@ -476,26 +482,26 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
 
 
 ;;; Adding New Tasks Quickly with Org Capture
-(setq org-default-notes-file "~/progetti/org/notes.org")
+(setq org-default-notes-file "~/projects/org/notes.org")
 
 ;; Capture templates for: TODO tasks, Notes, appointments and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/progetti/org/notes.org")
+      (quote (("t" "todo" entry (file "~/projects/org/notes.org")
                "* TODO %?\n%U\n")
-              ("n" "note" entry (file "~/progetti/org/notes.org")
+              ("n" "note" entry (file "~/projects/org/notes.org")
                "* %? :NOTE:\n%U\n%a\n")
-              ("d" "diary" entry (file+datetree "~/progetti/org/diary.org")
+              ("d" "diary" entry (file+datetree "~/projects/org/diary.org")
                "* %?\n%U\n")
-              ("l" "letture" entry (file+headline "~/progetti/org/personale.org" "letture")
+              ("l" "letture" entry (file+headline "~/projects/org/personale.org" "letture")
                "* %?\n%U\n")
-              ("f" "film" entry (file+headline "~/progetti/org/personale.org" "film")
+              ("f" "film" entry (file+headline "~/projects/org/personale.org" "film")
                "* %?\n%U\n")
-              ("v" "viaggi" entry (file+headline "~/progetti/org/personale.org" "viaggi")
+              ("v" "viaggi" entry (file+headline "~/projects/org/personale.org" "viaggi")
                "* %?\n%U\n")
-              ("h" "abitudini" entry (file "~/progetti/org/notes.org")
+              ("h" "abitudini" entry (file "~/projects/org/notes.org")
                ;;"* NEXT %?\n%U\n%a\nSCHEDULED: %t .+1d/3d\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %t .+1d/3d\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")
-              ("w" "org-protocol" entry (file "~/progetti/org/notes.org")
+              ("w" "org-protocol" entry (file "~/projects/org/notes.org")
                "* TODO Review %c\n%U\n" :immediate-finish t))))
 
 
@@ -531,7 +537,7 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
 ;;; Custom agenda views
 
 ;; Do not dim blocked tasks
-(setq org-agenda-dim-blocked-tasks t)
+(setq org-agenda-dim-blocked-tasks nil)
 
 ;; Compact the block agenda view
 (setq org-agenda-compact-blocks t)
@@ -1098,6 +1104,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 ; Logging stuff
 (setq org-log-done (quote time))
+(setq org-log-state-notes-insert-after-drawers t)
 (setq org-log-into-drawer "LOGBOOK")
 
 ; Require a final newline when saving files

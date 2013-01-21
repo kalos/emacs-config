@@ -1,1 +1,1 @@
-;; org-persist.el - jiji.nerdrug.org at <2013-01-04 ven 17:59>
+;; org-persist.el - jiji.nerdrug.org at <2013-01-20 dom 23:15>

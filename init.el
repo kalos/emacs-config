@@ -1,5 +1,9 @@
 ;-*- coding: utf-8 -*-
 
+(prefer-coding-system 'utf-8)
+(set-charset-priority 'unicode)
+(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+
 
 (setq hippie-expand-try-functions-list
              '(try-complete-lisp-symbol
@@ -48,13 +52,13 @@
 ;(setq el-get-sources
 ;      '((:name emacs-goodies-el :type apt-get)))
 
-(setq my-packages
-      (append
-       '(el-get package color-theme color-theme-zenburn)
-       ;;'(el-get nognus gnus-identities color-theme-zenburn zenburn-theme) ;;offlineimap cssh switch-window vkill google-maps nxhtml xcscope yasnippet)
-       (mapcar 'el-get-source-name el-get-sources)))
-
-(el-get 'sync my-packages)
+;(setq my-packages
+;      (append
+;       '(el-get package color-theme color-theme-zenburn)
+;       ;;'(el-get nognus gnus-identities color-theme-zenburn zenburn-theme) ;;offlineimap cssh switch-window vkill google-maps nxhtml xcscope yasnippet)
+;       (mapcar 'el-get-source-name el-get-sources)))
+;
+;(el-get 'sync my-packages)
 
 
 
@@ -87,7 +91,9 @@
 
 
 ;; Load preferred theme
-(color-theme-zenburn)
+;(color-theme-zenburn)
+(load-file "~/.emacs.d/zenburn-theme.el")
+(load-theme 'zenburn t)
 
 ;; org-mode config
 (load-file "~/.emacs.d/local-orgmode.el")
@@ -97,7 +103,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/progetti/org/libreit.org" "~/progetti/org/personale.org" "~/progetti/org/informatica.org" "~/progetti/org/notes.org"))))
+ '(org-agenda-files (quote ("~/projects/org/libreit.org" "~/projects/org/personale.org" "~/projects/org/informatica.org" "~/projects/org/notes.org"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

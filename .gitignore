@@ -1,3 +1,7 @@
+*~
+nobackup
+.#*
+\#*\#
 .org-id-locations
 .smex-items
 auto-save-list
@@ -6,3 +10,6 @@ backups/
 places
 *.old
 *.bak
+
+el-get/
+url/
