@@ -11,5 +11,8 @@ places
 *.old
 *.bak
 
+el-get
 el-get/
 url/
+org-clock-save.el
+session.*
